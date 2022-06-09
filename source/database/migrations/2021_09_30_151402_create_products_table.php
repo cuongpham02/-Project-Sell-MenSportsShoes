@@ -19,12 +19,14 @@ class CreateProductsTable extends Migration
             $table->decimal('price');
             $table->string('desc');
             $table->string('status');
+            $table->integer('inventory')->default(1);
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('brand_id');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->string('image');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

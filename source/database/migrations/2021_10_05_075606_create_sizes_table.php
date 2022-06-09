@@ -17,6 +17,7 @@ class CreateSizesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('number_size');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

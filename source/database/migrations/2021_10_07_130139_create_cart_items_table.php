@@ -21,7 +21,7 @@ class CreateCartItemsTable extends Migration
             $table->decimal('price', 20, 4);
             $table->string('image')->nullable();
             $table->integer('quantity');
-
+            $table->integer('size')->nullable();
             $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
             $table->timestamps();
         });
