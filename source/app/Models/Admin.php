@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Model\Comment;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Customer extends Model
 {
     //
 }

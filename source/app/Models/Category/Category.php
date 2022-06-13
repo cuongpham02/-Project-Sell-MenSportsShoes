@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Model\Brand;
+namespace App\Models\Category;
 
-use App\Product;
+use App\Models\Product\Product;
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class Category extends Model
 {
     public $timestamps = false;
     protected $fillable = [
         'name',  'desc'
     ];
     protected $primaryKey = 'id';
-    protected $table = 'brands';
+    protected $table = 'categories';
     public function product(){
-        return $this->hasMany(Product::class,'brand_id','id');
+        return $this->hasMany(Product::class,'category_id','id');
+    }
 }
