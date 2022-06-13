@@ -1,14 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models\Permission;
 
+use App\Roles;
 use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-          'name','desc',
+        'name','desc',
     ];
     protected $primaryKey = 'id';
     protected $table = 'permissions';

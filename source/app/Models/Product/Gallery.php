@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models\Product;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Gallery extends Model
 {
-   public $timestamps = false; //set time to false
+    public $timestamps = false; //set time to false
     protected $fillable = [
         'gallery_name', 'gallery_image', 'product_id'
     ];
