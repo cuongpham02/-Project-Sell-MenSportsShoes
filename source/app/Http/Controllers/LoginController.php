@@ -14,23 +14,23 @@ class LoginController extends Controller
 {
     public function index()
     {
-       return view('admin.login_admin');
+       return view('Admin.login_admin');
     }
 
     public function login_dashboard(Request $request)
     {
         $this->validate($request,[
-            'admin_email' => 'required|email|max:255', 
+            'admin_email' => 'required|email|max:255',
             'password' => 'required|max:255'
         ]);
 
         if (!Users::where('email','=',$request->admin_email)->first()) {
-            return redirect('/admin/login')->with('message','Email không đúng');
+            return redirect('/Admin/login')->with('message','Email không đúng');
         } else {
             if(Auth::attempt(['email'=>$request->admin_email, 'password'=> $request->password, 'flag'=>1 ])){
-                return redirect('/admin/dashboard');
+                return redirect('/Admin/dashboard');
             }else{
-                return redirect('/admin/login')->with('message','Password không đúng')->withInput(['admin_email' => $request->admin_email]);
+                return redirect('/Admin/login')->with('message','Password không đúng')->withInput(['admin_email' => $request->admin_email]);
 
             }
         }
@@ -38,6 +38,6 @@ class LoginController extends Controller
 
     public function logout(){
         Auth::logout();
-        return Redirect::to('/admin/login');
+        return Redirect::to('/Admin/login');
     }
 }

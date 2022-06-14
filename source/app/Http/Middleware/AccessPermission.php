@@ -32,7 +32,7 @@ class AccessPermission
         $check_per = Permission::where('name', $permission)->value('id');
         if ( $get_id_per->contains($check_per) ) {
             return $next($request);
-        }    
-        return redirect('/admin/dashboard');
+        }
+        return redirect('/Admin/dashboard');
     }
 }

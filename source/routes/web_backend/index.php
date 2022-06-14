@@ -2,14 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('/auth')->as('auth.')->group(base_path('routes/web/auth.php'));
+Route::prefix('/Auth')->as('auth.')->group(base_path('routes/web_backend/auth.php'));
 
-Route::middleware(['auth:web'])->group(function () {
-    Route::prefix('/products')->as('products.')->group(base_path('routes/web/product.php'));
-    Route::prefix('/users')->as('users.')->group(base_path('routes/web/user.php'));
-    Route::prefix('/managers')->as('managers.')->group(base_path('routes/web/manager.php'));
-    Route::prefix('/documents')->as('documents.')->group(base_path('routes/web/document.php'));
-    Route::prefix('/industrial-waste')->as('industrial_waste.')->group(base_path('routes/web/industrial-waste.php'));
-    Route::prefix('/notifications')->as('notifications.')->group(base_path('routes/web/notification.php'));
-    Route::prefix('/categories')->as('categories.')->group(base_path('routes/web/category.php'));
+Route::middleware(['auth:admins'])->group(function () {
+    Route::prefix('/Dashboard')->as('admin.dashboard.')->group(base_path('routes/web_backend/dashboard.php'));
+    Route::prefix('/Products')->as('admin.products.')->group(base_path('routes/web_backend/product.php'));
+    Route::prefix('/Users')->as('admin.users.')->group(base_path('routes/web_backend/user.php'));
+    Route::prefix('/Roles')->as('admin.roles.')->group(base_path('routes/web_backend/role.php'));
+    Route::prefix('/Permissions')->as('admin.permissions.')->group(base_path('routes/web_backend/permission.php'));
+    Route::prefix('/Brand')->as('admin.brands.')->group(base_path('routes/web_backend/brand.php'));
+    Route::prefix('/Category')->as('admin.categories.')->group(base_path('routes/web_backend/category.php'));
 });

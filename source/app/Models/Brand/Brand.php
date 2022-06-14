@@ -3,13 +3,15 @@
 namespace App\Models\Brand;
 
 use App\Models\Product\Product;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Brand extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'name', 'desc'
+        'name',
+        'desc'
     ];
     protected $primaryKey = 'id';
     protected $table = 'brands';

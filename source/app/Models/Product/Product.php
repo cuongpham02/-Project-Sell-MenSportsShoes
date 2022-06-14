@@ -2,9 +2,10 @@
 
 namespace App\Models\Product;
 
-use App\Brand;
+
+use App\Models\Brand\Brand;
 use App\Models\Category\Category;
-use App\Models\Comment\Comment;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -18,29 +19,19 @@ class Product extends Model
     protected $casts = [
         'price' => 'float',
     ];
-
-    public function comment()
-    {
-        return $this->hasMany(Comment::class, 'product_id', 'id');
+    public function comment(){
+        return $this->hasMany(Comment::class,'product_id','id');
     }
-
-    public function gallery()
-    {
-        return $this->hasMany(Gallery::class, 'product_id', 'id');
+    public function gallery(){
+        return $this->hasMany(Gallery::class,'product_id','id');
     }
-
-    public function brand()
-    {
-        return $this->belongsto(Brand::class, 'brand_id', 'id');
+    public function brand(){
+        return $this->belongsto(Brand::class,'brand_id','id');
     }
-
-    public function category()
-    {
-        return $this->belongsto(Category::class, 'category_id', 'id');
+    public function category(){
+        return $this->belongsto(Category::class,'category_id','id');
     }
-
-    public function size()
-    {
+    public function size(){
         return $this->belongsToMany(Size::class, 'products_sizes', 'product_id', 'size_id')->withPivot('quantity');
     }
 

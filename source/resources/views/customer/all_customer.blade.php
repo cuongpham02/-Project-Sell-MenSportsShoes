@@ -6,10 +6,10 @@
       Liệt kê users
     </div>
     <div class="row w3-res-tb">
-      <div class="col-sm-2 m-b-xs">     
+      <div class="col-sm-2 m-b-xs">
       </div>
       <div class="col-sm-4 m-b-xs">
-            
+
       </div>
       <div class="col-sm-4">
         <div class="input-group">
@@ -46,18 +46,18 @@
                 <td><?= $i++;  ?></td>
                 <td>{{ $user->name }}</td>
                 <td>
-                  {{ $user->email }} 
+                  {{ $user->email }}
                   <input type="hidden" name="admin_email" value="{{ $user->email }}">
                   <input type="hidden" name="admin_id" value="{{ $user->id }}">
                 </td>
                 <td>{{ $user->phone }}</td>
                 <!-- <td>{{ $user->password }}</td> -->
               <td>
-                 {{-- <a href="{{route('admin.edit-users',$user->id)}}" class="active" ui-toggle-class=""> --}}
+                 {{-- <a href="{{route('Admin.edit-users',$user->id)}}" class="active" ui-toggle-class=""> --}}
                   <i class="fa fa-pencil-square-o text-success text-active"></i></a><br>
-                <a  onclick="return confirm('Bạn muốn xóa Users này?')" href="{{route('admin.delete-customer',$user->id)}}">
+                <a  onclick="return confirm('Bạn muốn xóa Users này?')" href="{{route('Admin.delete-customer',$user->id)}}">
                   <i style="text-align: center;" class="fa fa-times text-danger text"></i></a>
-              </td> 
+              </td>
               </tr>
           @endforeach
         </tbody>
@@ -65,10 +65,10 @@
     </div>
     <footer class="panel-footer">
       <div class="row">
-        <div class="col-sm-5 text-right text-center-xs">                
-          
+        <div class="col-sm-5 text-right text-center-xs">
+
         </div>
-        <div class="col-sm-7 text-right text-center-xs">                
+        <div class="col-sm-7 text-right text-center-xs">
           <ul class="pagination pagination-sm m-t-none m-b-none">
             {!!$admin->render()!!}
           </ul>

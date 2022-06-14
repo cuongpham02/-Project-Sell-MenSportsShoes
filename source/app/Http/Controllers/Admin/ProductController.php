@@ -28,7 +28,7 @@ class ProductController extends Controller
     {
         $all_size=Size::all();
         $all_product=Product::with('brand','category','size')->orderBy('id','DESC')->get();
-        return view('admin.product.show_all_product')->with(compact('all_product','all_size'));
+        return view('Admin.product.show_all_product')->with(compact('all_product','all_size'));
     }
 
     public function search(Request $request)
@@ -57,7 +57,7 @@ class ProductController extends Controller
     }
     public function search_ajax(Request $request){
         // $gallery = Gallery::where('product_id',$product_id)->get();
-        // //update views 
+        // //update views
         // $product = Product::where('product_id',$product_id)->first();
         // $product->product_views = $product->product_views + 1;
         // $product->save();
@@ -72,9 +72,9 @@ class ProductController extends Controller
         $cate_product=Category::all();
         $brand_product=Brand::all();
         $sizes = Size::orderBy('number_size','DESC')->get();
-        return view('admin.product.add_product')->with(compact('cate_product','brand_product', 'sizes'));
+        return view('Admin.product.add_product')->with(compact('cate_product','brand_product', 'sizes'));
     }
-    
+
     public function store(AddProductRequest $request)
     {
         // $this->validation($request);
@@ -107,13 +107,13 @@ class ProductController extends Controller
             // cau lech dua du lieu vao DB;
             \DB::commit();
                 Session::put('message','Thêm sản phẩm thành công');
-                return Redirect::to('/admin/product/show-all-product');
+                return Redirect::to('/Admin/product/show-all-product');
             }
         } catch (\Exception $e) {
             \DB::rollback();
             return Redirect()->back()->with('message', 'erorr');
         }
-        
+
     }
 
 //Size sản phẩm.
@@ -122,14 +122,14 @@ class ProductController extends Controller
 // <<<<<<< home_cuong
 //         $all_sizes=Size::all();
 
-//         return view('admin.size.product_sizedetials')->with(compact('product','all_sizes'));
+//         return view('Admin.size.product_sizedetials')->with(compact('product','all_sizes'));
 // =======
 //         $sizes=Size::all();
-//         return view('admin.size.product_sizedetials', compact('product', 'sizes'));
+//         return view('Admin.size.product_sizedetials', compact('product', 'sizes'));
 // >>>>>>> master
     // }
 
-    
+
 
     public function create_new_size(Request $request){
             $this->validate($request,[
@@ -170,18 +170,18 @@ class ProductController extends Controller
     }
 //End Size
 
-//Status sản phẩm    
+//Status sản phẩm
     public function active_product($id)
     {
         Product::findOrfail($id)->update(['status'=>1]);
             Session::put('message','Hiển Thị Sản Phẩm');
-            return Redirect::to('/admin/product/show-all-product');
+            return Redirect::to('/Admin/product/show-all-product');
     }
     public function unactive_product($id)
     {
         Product::findOrfail($id)->update(['status'=>0]);
             Session::put('message','Ẩn Sản Phẩm');
-            return Redirect::to('/admin/product/show-all-product'); 
+            return Redirect::to('/Admin/product/show-all-product');
     }
 //End Status sản phẩm
     /**
@@ -191,7 +191,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit_product($id)
-    {   
+    {
         $cate_product=Category::all();
         $brand_product=Brand::all();
         $all_sizes=Size::orderBy('number_size','DESC')->get();
@@ -201,9 +201,9 @@ class ProductController extends Controller
         $size_qty=Product_Size::where('product_id',$id)->pluck('quantity');
         // dd($size_id);
         // $namecate=$edit_product->category->name;
-        return view('admin.product.edit_product')->with(compact('edit_product','cate_product','brand_product','all_sizes','size_qty','size_id'));
+        return view('Admin.product.edit_product')->with(compact('edit_product','cate_product','brand_product','all_sizes','size_qty','size_id'));
     }
-      
+
 
     /**
      * Update the specified resource in storage.
@@ -262,7 +262,7 @@ class ProductController extends Controller
                     'product_id' => $id
                 ],$data);
             }
-            return Redirect::to('/admin/product/show-all-product')->with('message','Update Sản Phẩm Thành Công');
+            return Redirect::to('/Admin/product/show-all-product')->with('message','Update Sản Phẩm Thành Công');
         }else{
             Product::findOrfail($id)->update($data);
             $listSize = $request->size;
@@ -279,14 +279,14 @@ class ProductController extends Controller
                     'product_id' => $id
                 ],$data);
             }
-            return Redirect::to('/admin/product/show-all-product')->with('message','Update Sản Phẩm Thành Công');
+            return Redirect::to('/Admin/product/show-all-product')->with('message','Update Sản Phẩm Thành Công');
         }
          // \DB::commit();
         //  } catch (\Exception $e) {
         //     \DB::rollback();
         //     return Redirect()->back()->with('message', 'erorr');
         // }
-    }    
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -300,15 +300,15 @@ class ProductController extends Controller
             DB::beginTransaction();
             $delete_product=Product::findOrfail($id);
             $delete_product->size()->detach();
-            
+
             $comment=Comment::where('product_id',$id)->delete();
             $comment=Gallery::where('product_id',$id)->delete();
             $delete_product->delete();
             DB::commit();
-            return Redirect::to('/admin/product/show-all-product')->with('message','Xóa Phẩm Thành Công');
+            return Redirect::to('/Admin/product/show-all-product')->with('message','Xóa Phẩm Thành Công');
          }catch (\Exception $exception) {
             DB::rollBack();
             \Log::error('Loi:' . $exception->getMessage() . $exception->getLine());
         }
-    }    
+    }
 }

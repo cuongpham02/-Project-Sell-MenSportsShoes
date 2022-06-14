@@ -36,8 +36,8 @@ class OrderController extends Controller
             $orders->where('status', request('status'));
         }
         $orders = $orders->paginate(20);
-      
-        return view('admin.order.show_all_order', compact('orders'));
+
+        return view('Admin.order.show_all_order', compact('orders'));
     }
 
 
@@ -49,7 +49,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('admin.order.create');
+        return view('Admin.order.create');
     }
 
     /**
@@ -83,7 +83,7 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
         // dd($order->orderItems()->get());
-        return view('admin.order.show_order_items', compact('order'));
+        return view('Admin.order.show_order_items', compact('order'));
     }
 
     /**
