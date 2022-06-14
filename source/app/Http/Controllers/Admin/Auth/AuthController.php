@@ -3,38 +3,33 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Users;
-use Illuminate\Http\Request;
+use App\Http\Requests\Admin\Auth\LoginAdminRequest;
+use App\Services\Admin\Auth\LoginAdminService;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
-    public function index()
+    public function showFormLogin()
     {
-        return view('admin.login_admin');
+        return view('Admin.Auth.login_admin');
     }
 
-    public function login_dashboard(Request $request)
+    public function Login(LoginAdminRequest $request, LoginAdminService $loginservice)
     {
-        $this->validate($request,[
-            'admin_email' => 'required|email|max:255',
-            'password' => 'required|max:255'
-        ]);
+        $attributes = $request->validated();
+//        dd($attributes);
+        $result = $loginservice->doLogin($attributes);
 
-        if (!Users::where('email','=',$request->admin_email)->first()) {
-            return redirect('/admin/login')->with('message','Email không đúng');
-        } else {
-            if(Auth::attempt(['email'=>$request->admin_email, 'password'=> $request->password, 'flag'=>1 ])){
-                return redirect('/admin/dashboard');
-            }else{
-                return redirect('/admin/login')->with('message','Password không đúng')->withInput(['admin_email' => $request->admin_email]);
+        return $result;
 
-            }
-        }
     }
 
     public function logout(){
-        Auth::logout();
-        return Redirect::to('/admin/login');
+        if (Auth()->guard('admins')->user()) {
+            Auth::guard('admins')->logout();
+        }
+        return redirect()->route('auth.login');
     }
 }

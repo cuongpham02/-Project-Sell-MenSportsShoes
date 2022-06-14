@@ -2,8 +2,10 @@
 
 namespace App\Models\Role;
 
+
 use App\Models\Permission\Permission;
 use App\Models\User\User;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model

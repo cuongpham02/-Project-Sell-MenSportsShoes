@@ -15,11 +15,11 @@ class AdminLogin
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   
+    {
         if (Auth::Check()) {
             return $next($request);
         } else {
-            return redirect('admin/login');
+            return redirect('Admin/login');
         }
     }
 }

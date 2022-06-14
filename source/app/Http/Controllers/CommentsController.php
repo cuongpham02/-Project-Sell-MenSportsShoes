@@ -15,8 +15,8 @@ class CommentsController extends Controller
 {
      public function validation($request){
         return $this->validate($request,[
-            'desc' => 'required|max:255|min:3', 
-            'name' => 'required|max:100|min:3', 
+            'desc' => 'required|max:255|min:3',
+            'name' => 'required|max:100|min:3',
         ],
         [
             'name.required' => 'Bạn cần nhập tên để comment',
@@ -44,12 +44,12 @@ class CommentsController extends Controller
             $comment->status = $status;
             $comment->save();
         }
-       
+
     }
     public function show_list_comment(){
         $comment = Comment::with('product')->where('rep_comment',0)->orderBy('id','DESC')->get();
         $comment_rep = Comment::with('product')->where('rep_comment','>',0)->get();
-        return view('admin.comments.list_comments')->with(compact('comment','comment_rep'));
+        return view('Admin.comments.list_comments')->with(compact('comment','comment_rep'));
     }
     public function delete_comment($id){
         $comments=Comment::findorfail($id);
@@ -86,7 +86,7 @@ class CommentsController extends Controller
         $comment_rep = Comment::with('product')->where('rep_comment','>',0)->get();
         $output = '';
         foreach($comment as $key => $comm){
-            $output.= ' 
+            $output.= '
             <div class="row style_comment">
 
                                         <div class="col-md-2">

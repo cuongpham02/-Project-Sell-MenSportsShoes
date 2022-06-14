@@ -24,7 +24,7 @@ class BrandController extends Controller
         } else {
             $all_brand=Brand::orderBy('id','DESC')->paginate(6);
         }
-        return view('admin.brand.show_all_brand')->with(compact('all_brand'));
+        return view('Admin.brand.show_all_brand')->with(compact('all_brand'));
     }
 
     /**
@@ -34,7 +34,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('admin.brand.add_brand');
+        return view('Admin.brand.add_brand');
     }
 
 
@@ -47,7 +47,7 @@ class BrandController extends Controller
      */
     public function validation($request){
         return $this->validate($request,[
-            'name' => 'required|max:100|unique:brands,name|min:2', 
+            'name' => 'required|max:100|unique:brands,name|min:2',
             'desc' => 'required|max:255',
         ],
         [
@@ -64,32 +64,32 @@ class BrandController extends Controller
         $data = $request->all();
         $data['created_at']=$time;
         Brand::create($data);
-        return redirect('/admin/brand/show-all-brand')->with('message','Thêm Thương Hiệu Mới Thành Công');
+        return redirect('/Admin/brand/show-all-brand')->with('message','Thêm Thương Hiệu Mới Thành Công');
     }
 
-    
+
     public function show()
     {
         //
     }
 
-    
+
     public function edit($id)
     {
         $edit_brand=Brand::find($id);
         if ($edit_brand) {
-            return view('admin.brand.edit_brand')->with(compact('edit_brand'));
+            return view('Admin.brand.edit_brand')->with(compact('edit_brand'));
         }else{
             return redirect()->back();
         }
     }
 
     public function update(Request $request, $id)
-    {   
+    {
         $brand=Brand::findOrfail($id);
         if ($brand->name==$request->name) {
             $this->validate($request,[
-            'name' => 'required|max:100', 
+            'name' => 'required|max:100',
             'desc' => 'required|max:255'
         ],
         [
@@ -98,14 +98,14 @@ class BrandController extends Controller
         ]);
             $data=$request->all();
             $brand->update($data);
-            return redirect('/admin/brand/show-all-brand')->with('message','Update Thương Hiệu Thành Công');  
+            return redirect('/Admin/brand/show-all-brand')->with('message','Update Thương Hiệu Thành Công');
         }else{
             $this->validation($request);
             $data=$request->all();
             $brand->update($data);
-            return redirect('/admin/brand/show-all-brand')->with('message','Update Thương Hiệu Thành Công');
+            return redirect('/Admin/brand/show-all-brand')->with('message','Update Thương Hiệu Thành Công');
         }
-    }  
+    }
 
     public function destroy($id)
     {

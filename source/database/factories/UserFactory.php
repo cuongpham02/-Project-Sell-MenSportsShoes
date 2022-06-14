@@ -30,6 +30,6 @@ $factory->define(Users::class, function (Faker $faker) {
     ];
 });
     $factory->afterCreating(Users::class, function($users,$faker){
-    $role = Roles::where('roles_name','admin')->get();
+    $role = Roles::where('roles_name','Admin')->get();
     $users->roles()->sync($role->pluck('id'));
 });

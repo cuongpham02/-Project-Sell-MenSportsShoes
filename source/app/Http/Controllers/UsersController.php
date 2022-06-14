@@ -17,7 +17,7 @@ use App\Http\Requests\CreateUserRequest;
 class UsersController extends Controller
 {
     public function register_auth(){
-        return view('admin.users.register_auth');
+        return view('Admin.users.register_auth');
     }
     public function validation($request){
         return $this->validate($request,[
@@ -41,13 +41,13 @@ class UsersController extends Controller
         $data['flag'] =1;
         $data['password'] = bcrypt($data['password']);
         Users::create($data);
-        return redirect('/admin/login')->with('message','Đăng ký thành công');
+        return redirect('/Admin/login')->with('message','Đăng ký thành công');
     }
-    
+
     //users chưa có permission----------------------------------------------------
     public function index_users(){
          $admin = Users::with('roles')->where('flag',1)->orderBy('id','DESC')->paginate(4);
-        return view('admin.users.all_users')->with(compact('admin'));
+        return view('Admin.users.all_users')->with(compact('admin'));
     }
     public function assign_roles(Request $request){
         if(Auth::id()==$request->admin_id){
@@ -58,18 +58,18 @@ class UsersController extends Controller
 
         if($request->sub_admin_role){
             // detach()->ngược lại với attach()
-           $user->roles()->attach(Roles::where('roles_name','sub_admin')->first());     
+           $user->roles()->attach(Roles::where('roles_name','sub_admin')->first());
         }
         if($request->shipper_role){
-           $user->roles()->attach(Roles::where('roles_name','shipper')->first());     
+           $user->roles()->attach(Roles::where('roles_name','shipper')->first());
         }
         if($request->admin_role){
-           $user->roles()->attach(Roles::where('roles_name','admin')->first());     
+           $user->roles()->attach(Roles::where('roles_name','Admin')->first());
         }
         return redirect()->back()->with('message','Cấp quyền thành công');
     }
      public function add_users(){
-        return view('admin.users.add_users');
+        return view('Admin.users.add_users');
     }
     public function store_users(CreateUserRequest $request){
         $data = $request->all();
@@ -77,17 +77,17 @@ class UsersController extends Controller
         $data['flag']=1;
         Users::create($data);
         Session::put('message','Thêm users thành công');
-        return Redirect::to('admin/all-users');
+        return Redirect::to('Admin/all-users');
     }
      public function edit_users($id){
 
         $edit_user=Users::findorfail($id);
 
-        return view('admin.users.edit_user')->with(compact('edit_user'));
+        return view('Admin.users.edit_user')->with(compact('edit_user'));
     }
     public function update_user(Request $request,$id){
 
-        
+
         $edit_user=Users::findorfail($id);
         if ($edit_user->email== $request->email) {
             $data=$request->all();
@@ -101,7 +101,7 @@ class UsersController extends Controller
             $data['flag']=1;
             $edit_user->update($data);
         }
-        return Redirect::to('admin/all-users')->with('message','Update thành công');
+        return Redirect::to('Admin/all-users')->with('message','Update thành công');
     }
     //end-users chưa có permission----------------------------------------------------
     public function index_customer(){
@@ -113,8 +113,8 @@ class UsersController extends Controller
         $users->delete();
         return redirect()->back()->with('message','Xóa user thành công');
     }
-    
-    
+
+
 
     //user-roles new-----------------------------------------------------
     public function index_users_new(){
@@ -124,11 +124,11 @@ class UsersController extends Controller
                 // dd($value->roles_name);
             }
         }
-        return view('admin.users_new.all_users_new')->with(compact('users'));
+        return view('Admin.users_new.all_users_new')->with(compact('users'));
     }
     public function add_users_new(){
         $roles=Roles::all();
-        return view('admin.users_new.add_users_new',compact('roles'));
+        return view('Admin.users_new.add_users_new',compact('roles'));
     }
     public function save_users_new(CreateUserRequest $request){
         $data = $request->all();
@@ -140,7 +140,7 @@ class UsersController extends Controller
             $users=Users::create($data);
             $users->roles()->attach($request->roles);
             DB::commit();
-            return Redirect::to('admin/all-users-new')->with('message','Thêm users thành công');
+            return Redirect::to('Admin/all-users-new')->with('message','Thêm users thành công');
         } catch (\Exception $exception) {
             DB::rollBack();
         }
@@ -151,11 +151,11 @@ class UsersController extends Controller
         }
         $roles=Roles::all();
         $uses_roles = DB::table('users_roles')->where('user_id', $id)->pluck('role_id');
-        return view('admin.users_new.edit_users_new')->with(compact('edit_user','roles','uses_roles'));
+        return view('Admin.users_new.edit_users_new')->with(compact('edit_user','roles','uses_roles'));
     }
     public function update_user_new(Request $request,$id){
         $edit_user=Users::findorfail($id);
-        
+
         if ($edit_user->email==$request->email) {
             $data=$request->all();
             $data['flag']=1;
@@ -164,11 +164,11 @@ class UsersController extends Controller
                 $edit_user->update($data);
                 DB::table('users_roles')->where('user_id', $id)->delete();
                 $edit_user->roles()->attach($request->roles);
-            DB::commit(); 
-                return Redirect::to('admin/all-users-new')->with('message','Update thành công');
+            DB::commit();
+                return Redirect::to('Admin/all-users-new')->with('message','Update thành công');
              } catch (\Exception $exception) {
                 DB::rollBack();
-            } 
+            }
         }else{
             $this->validation($request);
             try {
@@ -179,12 +179,12 @@ class UsersController extends Controller
                 DB::table('users_roles')->where('user_id', $id)->delete();
                 $edit_user->roles()->attach($request->roles);
                 DB::commit();
-                return Redirect::to('admin/all-users-new')->with('message','Update thành công');
+                return Redirect::to('Admin/all-users-new')->with('message','Update thành công');
             } catch (\Exception $exception) {
                 DB::rollBack();
             }
         }
-        
+
     }
     public function delete_user_roles($id){
         if(Auth::id()==$id){
@@ -202,7 +202,7 @@ class UsersController extends Controller
             return redirect()->back()->with('message','Xóa user thành công');
         } catch (\Exception $exception) {
                 DB::rollBack();
-        }    
+        }
     }
     //end users-roles-new---------------------------------------------------------------------
 }

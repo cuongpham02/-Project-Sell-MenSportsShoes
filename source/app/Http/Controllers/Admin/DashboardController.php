@@ -7,8 +7,17 @@ use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
+    /**
+     * Return víew Dashboard
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        return view('admin.home_admin');
+        return view('Admin.home_admin');
+    }
+
+    public function check()
+    {
+        return redirect()->route('admin.dashboard.index');
     }
 }

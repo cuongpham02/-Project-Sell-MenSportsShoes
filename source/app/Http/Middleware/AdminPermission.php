@@ -16,9 +16,9 @@ class AdminPermission
      */
     public function handle($request, Closure $next)
     {
-          if(Auth::user()->hasRole(['admin'])){
+          if(Auth::user()->hasRole(['Admin'])){
             return $next($request);
         }
-        return redirect('/admin/all-users');
+        return redirect('/Admin/all-users');
     }
 }

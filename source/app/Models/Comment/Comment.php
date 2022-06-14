@@ -1,8 +1,14 @@
 <?php
 
+<<<<<<<< HEAD:source/app/Models/Comment/Comment.php
 namespace App\Models\Comment;
 
 use App\Models\Product\Product;
+========
+namespace App\Models\Product;
+
+use App\Product;
+>>>>>>>> a8e3ab1 (Settings Environment):source/app/Models/Product/Comment.php
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model

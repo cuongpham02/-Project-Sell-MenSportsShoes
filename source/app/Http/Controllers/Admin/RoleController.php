@@ -13,11 +13,11 @@ class RoleController extends Controller
     public function index(){
         $roles=Roles::orderby('id','DESC')->get();
         // dd($roles);
-        return view('admin.roles.all_roles')->with(compact('roles'));
+        return view('Admin.roles.all_roles')->with(compact('roles'));
     }
     public function add_roles(){
         $permission=Permission::all();
-        return view('admin.roles.add_roles')->with(compact('permission'));
+        return view('Admin.roles.add_roles')->with(compact('permission'));
     }
     public function save_roles(Request $request){
             $this->validate($request,[
@@ -30,12 +30,12 @@ class RoleController extends Controller
             $data=$request->all();
         try {
             DB::beginTransaction();
-            $new_role= new Roles;   
+            $new_role= new Roles;
             $new_role->roles_name=$request->roles_name;
             $new_role->save();
             $new_role->permission()->attach($request->permission);
             DB::commit();
-            return redirect('/admin/all-roles')->with('message','Thêm roles thành công');
+            return redirect('/Admin/all-roles')->with('message','Thêm roles thành công');
         } catch (\Exception $exception) {
             DB::rollBack();
             \Log::error('Loi:' . $exception->getMessage() . $exception->getLine());
@@ -52,7 +52,7 @@ class RoleController extends Controller
         $role =Roles::findOrfail($id);
         $roles_permissions = DB::table('roles_permissions')->where('role_id', $id)->pluck('permission_id');
         // dd($getAllPermissionOfRole);
-        return view('admin.roles.edit_roles', compact('permissions', 'role', 'roles_permissions'));
+        return view('Admin.roles.edit_roles', compact('permissions', 'role', 'roles_permissions'));
     }
     public function validation($request){
         return $this->validate($request,[
@@ -74,11 +74,11 @@ class RoleController extends Controller
                 DB::table('roles_permissions')->where('role_id', $id)->delete();
                 // $roleCreate = Roles::findOrfail($id);
                 $role->permission()->attach($request->permission);
-            DB::commit();    
-                return redirect('/admin/all-roles')->with('message','Update roles thành công');
+            DB::commit();
+                return redirect('/Admin/all-roles')->with('message','Update roles thành công');
             } catch (\Exception $exception) {
             DB::rollBack();
-            }    
+            }
         }else{
             $this->validation($request);
             $data=$request->all();
@@ -90,12 +90,12 @@ class RoleController extends Controller
                 // $roleCreate = Roles::findOrfail($id);
                 $role->permission()->attach($request->permission);
             DB::commit();
-                return redirect('/admin/all-roles')->with('message','Update roles thành công');
+                return redirect('/Admin/all-roles')->with('message','Update roles thành công');
             } catch (\Exception $exception) {
             DB::rollBack();
-            }       
+            }
         }
-        
+
     }
 
     public function delete_roles($id)
@@ -109,7 +109,7 @@ class RoleController extends Controller
                 $role->delete();
             }
             DB::commit();
-            return redirect('/admin/all-roles')->with('message','Xóa roles thành công');
+            return redirect('/Admin/all-roles')->with('message','Xóa roles thành công');
         } catch (\Exception $exception) {
             DB::rollBack();
         }

@@ -8,8 +8,8 @@ use Session;
 use App\User;
 use App\Order;
 use App\OrderItem;
-use App\Product; 
-use App\Cart;   
+use App\Product;
+use App\Cart;
 use App\Product_Size;
 use App\Http\Requests\CreateOrderRequest;
 
@@ -46,7 +46,7 @@ class OrderController extends Controller
             $cart = session('cart');
             $dataOrder = $request->only('name','address','phone','email');
             $dataOrder['status'] = Order::ORDER_STATUS['CREATED'];
-            
+
             $order = Order::create($dataOrder);
             $data = [];
             foreach ($cart->cartItems()->get() as $item) {
@@ -68,11 +68,11 @@ class OrderController extends Controller
             }
             //Cập nhật lại số lượng sp trong bảng Product
             // dd($data);
-    
-    
+
+
             $orderDetail = OrderItem::insert($data);
-            
-            
+
+
             \DB::commit();
 
             if ($orderDetail) {
@@ -82,15 +82,15 @@ class OrderController extends Controller
                     'order' => $order,
                     'orderDetail' =>  $orderDetail
                 ];
-                
+
                 // dd($userEmail, $dataOrder, config('mail.username'));
                 \Mail::send('frontend.mails.order-detail', $data, function ($message) use ($dataOrder) {
-                    $message->from('admin@gmail.com','Admin');
+                    $message->from('Admin@gmail.com','Admin');
                     $message->to($dataOrder['email'],  $dataOrder['name']);
                     $message->subject('Confirm Order');
                 });
 
-                
+
                 session()->forget('cart');
                 $cart_delete= Cart::findOrfail($cart->id);
                 $cart_delete->delete();
@@ -128,7 +128,7 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    
+
     public function edit($id)
     {
         //

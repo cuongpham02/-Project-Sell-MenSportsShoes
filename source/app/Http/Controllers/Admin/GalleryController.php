@@ -13,7 +13,7 @@ class GalleryController extends Controller
 {
     public function gallery_product($id){
         $pro_id = $id;
-        return view('admin.image.product_image')->with(compact('pro_id'));
+        return view('Admin.image.product_image')->with(compact('pro_id'));
 
     }
     public function update_gallery_name(Request $request){
@@ -38,11 +38,11 @@ class GalleryController extends Controller
                 $gallery->product_id = $pro_id;
                 $gallery->save();
             }
-            Session::put('message','Thêm thư viện ảnh thành công');    
+            Session::put('message','Thêm thư viện ảnh thành công');
         }else{
             Session::put('message','Chưa có ảnh tải lên');
         }
-        
+
         return redirect()->back();
 
     }
@@ -63,8 +63,8 @@ class GalleryController extends Controller
                 $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
                 $get_image->move('public/upload/gallery',$new_image);
                 $gallery->gallery_image = $new_image;
-                $gallery->save(); 
-            
+                $gallery->save();
+
         }
     }
     public function load_gallery(Request $request){
@@ -106,11 +106,11 @@ class GalleryController extends Controller
                     </tr>
                 ';
             }
-        }else{ 
+        }else{
             $output.='
                     <tr>
                        <td colspan="4">Sản phẩm chưa có thư viện ảnh</td>
-                                       
+
                     </tr>
                 ';
         }
