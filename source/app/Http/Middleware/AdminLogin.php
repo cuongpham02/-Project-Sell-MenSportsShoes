@@ -8,18 +8,18 @@ use Closure;
 class AdminLogin
 {
     /**
-     * Handle an incoming request.
-     *
+     * Handle Check Login Admin.
+     * Use Guard 'admins'.
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::Check()) {
+        if (auth()->guard('admins')->check()) {
             return $next($request);
         } else {
-            return redirect('Admin/login');
+            return redirect()->route('auth.login');
         }
     }
 }

@@ -51,7 +51,6 @@
                   <input type="hidden" name="admin_id" value="{{ $user->id }}">
                 </td>
                 <td>{{ $user->phone }}</td>
-                <!-- <td>{{ $user->password }}</td> -->
               <td>
                  {{-- <a href="{{route('Admin.edit-users',$user->id)}}" class="active" ui-toggle-class=""> --}}
                   <i class="fa fa-pencil-square-o text-success text-active"></i></a><br>

@@ -2,6 +2,8 @@
 
 namespace App\Services\Admin\Auth;
 
+use Illuminate\Support\Facades\Auth;
+
 class LoginAdminService
 {
     /**
@@ -10,8 +12,7 @@ class LoginAdminService
      * @return bool|\Illuminate\Http\RedirectResponse
      */
     public function doLogin(array $attrs) {
-//        dd($attrs);
-        $login = auth()->guard('admins')->attempt($attrs);
+        $login = Auth::guard('admins')->attempt($attrs);
 
         if(!$login) {
             $error = __('messages.fail.auth');
