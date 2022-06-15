@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Services\Admin\User;
 
-use App\Http\Controllers\Controller;
 use App\Repositories\User\UserRepository;
-use Illuminate\Http\Request;
 
-class UserController extends Controller
+class DeleteUserService
 {
     private $repository;
 
@@ -18,10 +16,9 @@ class UserController extends Controller
         $this->repository = $repository;
     }
 
-    public function index()
+    public function handle($attrs)
     {
-        $users = $this->repository->getAllUsers();
 
-        return view('admin.users.index');
     }
+
 }
