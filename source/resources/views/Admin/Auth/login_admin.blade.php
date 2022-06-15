@@ -22,36 +22,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 <body>
 <div class="log-w3">
-<div class="w3layouts-main">
-	<h2 style="color: white;">Đăng nhập ngay</h2>
-	<?php
-		$message=Session::get('message');
-                if ($message) {
-                  echo '<span style="color:red;font-size: 21px;
-   											 margin-left: 0px;" class="textalert">'.$message.'</span>';
-                  Session::put('message',null);
-                 }
-	 ?>
-	@if ($errors->any())
-    <div class="alert alert-danger">
-        There were some errors with your request.
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    <div class="w3layouts-main">
+        <h2 style="color: white;">Đăng nhập ngay</h2>
+        @php
+            $message=Session::get('message');
+            if ($message) {
+              echo '<span style="color:red;font-size: 21px;margin-left: 0px;" class="textalert">'.$message.'</span>';
+              session()->forget('message');
+             }
+         @endphp
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                There were some errors with your request.
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <form action="{{ route('auth.login') }}" method="post">
+            @csrf
+            <input type="text" class="ggg" name="email" placeholder="Enter Emai" value="{{ request('email',old('admin_email')) }}" required>
+            <input type="password" class="ggg" name="password" placeholder="Enter Password" required>
+            <span><input type="checkbox" value="remember" />Remember Me ?</span>
+            <h6><a href="#">Quên mật khẩu?</a></h6>
+                <div class="clearfix"></div>
+                <input type="submit" value="Login" name="login">
+        </form>
     </div>
-@endif
-		<form action="{{ route('auth.login') }}" method="post">
-			@csrf
-			<input type="text" class="ggg" name="email" placeholder="Enter Emai" value="{{ request('email',old('admin_email')) }}" required>
-			<input type="password" class="ggg" name="password" placeholder="Enter Password" required>
-			<span><input type="checkbox" value="remember" />Remember Me ?</span>
-			<h6><a href="#">Quên mật khẩu?</a></h6>
-				<div class="clearfix"></div>
-				<input type="submit" value="Login" name="login">
-		</form>
-</div>
 </div>
 <script src="{{asset('backend/js/bootstrap.js')}}"></script>
 <script src="{{asset('backend/js/jquery.dcjqaccordion.2.7.js')}}"></script>
