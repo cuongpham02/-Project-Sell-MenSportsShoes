@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Role;
+namespace App\Http\Requests\Admin\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class RoleCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class RoleCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'role_name' => 'required|unique:roles,roles_name|max:100',
+            'desc' => 'required|string|max:255',
         ];
     }
 }
