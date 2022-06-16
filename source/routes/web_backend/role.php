@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\RoleController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('all-roles','RoleController@index')->name('Admin.all-roles');
-Route::get('add-roles','RoleController@add_roles')->name('Admin.add-roles');
-// Route::get('test','RoleController@test')->name('Admin.test');
-Route::post('save-roles','RoleController@save_roles')->name('Admin.save-roles');
-Route::get('edit-roles/{id}','RoleController@edit_roles')->name('Admin.edit-roles');
-Route::post('update-roles/{id}','RoleController@update_roles')->name('Admin.update-roles');
-Route::get('delete-roles/{id}','RoleController@delete_roles')->name('Admin.delete-roles');
+Route::get('/',[RoleController::class, 'index'])->name('index');
+Route::get('create',[RoleController::class, 'create'])->name('create');
+Route::get('{role}',[RoleController::class, 'edit'])->name('edit');
+Route::get('get-soft-delete-roles',[RoleController::class, 'onlyTrashed'])->name('soft-delete');
+Route::get('restore/{id}',[RoleController::class, 'restore'])->name('restore');
+Route::post('',[RoleController::class, 'store'])->name('store');
+Route::patch('{id}',[RoleController::class, 'update'])->name('update');
+Route::delete('{id}',[RoleController::class, 'delete'])->name('delete');
+Route::delete('force-delete/{id}',[RoleController::class, 'forceDelete'])->name('force-delete');

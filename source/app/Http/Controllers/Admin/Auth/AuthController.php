@@ -19,7 +19,7 @@ class AuthController extends Controller
     public function Login(LoginAdminRequest $request, LoginAdminService $loginservice)
     {
         $attributes = $request->validated();
-//        dd($attributes);
+
         $result = $loginservice->doLogin($attributes);
 
         return $result;

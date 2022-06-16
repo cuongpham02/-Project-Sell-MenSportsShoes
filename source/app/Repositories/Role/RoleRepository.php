@@ -11,5 +11,6 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface RoleRepository extends RepositoryInterface
 {
-    //
+    public function getAllRoles(array $attributes = null);
+    public function getSoftDeleteRoles();
 }

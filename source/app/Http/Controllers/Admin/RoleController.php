@@ -2,117 +2,151 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use App\Roles;
-use App\Permission;
-use App\Roles_Permissions;
-use DB;
+
+use App\Http\Requests\Admin\Role\RoleCreateRequest;
+use App\Http\Requests\Admin\Role\RoleUpdateRequest;
+use App\Models\Permission\Permission;
+use App\Models\Role\Role;
+use App\Repositories\Role\RoleRepository;
+use App\Services\Admin\Role\CreateRoleService;
+use App\Services\Admin\Role\DeleteRoleService;
+use App\Services\Admin\Role\ForceDeleteRoleService;
+use App\Services\Admin\Role\RestoreRoleServiece;
+use App\Services\Admin\Role\UpdateRoleService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
-    public function index(){
-        $roles=Roles::orderby('id','DESC')->get();
-        // dd($roles);
-        return view('Admin.roles.all_roles')->with(compact('roles'));
-    }
-    public function add_roles(){
-        $permission=Permission::all();
-        return view('Admin.roles.add_roles')->with(compact('permission'));
-    }
-    public function save_roles(Request $request){
-            $this->validate($request,[
-            'roles_name' => 'required|unique:roles,roles_name|max:100',
-        ],
-        [
-            'roles_name.required' => 'Bạn chưa nhập tên roles',
-            'roles_name.unique' => 'Tên roles đã tồn tại',
-        ]);
-            $data=$request->all();
-        try {
-            DB::beginTransaction();
-            $new_role= new Roles;
-            $new_role->roles_name=$request->roles_name;
-            $new_role->save();
-            $new_role->permission()->attach($request->permission);
-            DB::commit();
-            return redirect('/Admin/all-roles')->with('message','Thêm roles thành công');
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            \Log::error('Loi:' . $exception->getMessage() . $exception->getLine());
-        }
-    }
-    // public function test(){
-    //     $test=Roles::all();
-    //     $name=$test->permission()->name;
-    //     dd($name);
-    // }
-    public function edit_roles($id)
+    private $repository;
+
+    /**
+     * @param RoleRepository $repository
+     */
+    public function __construct(RoleRepository $repository)
     {
-        $permissions =Permission::all();
-        $role =Roles::findOrfail($id);
+        $this->repository = $repository;
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Request $request)
+    {
+        $attributes = $request->all();
+        $roles = $this->repository->getAllRoles($attributes);
+
+        return view('Admin.Role.index');
+    }
+
+    /**
+     * Show view create Role.
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create()
+    {
+        $permissions = Permission::all();
+
+        return view('Admin.Role.create',compact('permissions'));
+    }
+
+    /**
+     * Handel store new role and attack permissions
+     * @param RoleCreateRequest $request
+     * @param CreateRoleService $service
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(RoleCreateRequest $request, CreateRoleService $service)
+    {
+        $attributes = $request->only(['role_name','desc']);
+        $permissions = $request->only(['premissions']);
+        $service->handle($attributes, $permissions);
+
+        return redirect()->route('admin.roles.index');
+        //        ->with('success', __('messages.request.create_success'));
+    }
+
+    /**
+     * Show view edit Role.
+     * @param Role $role
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Role $role)
+    {
+        $permissions = Permission::all();
         $roles_permissions = DB::table('roles_permissions')->where('role_id', $id)->pluck('permission_id');
-        // dd($getAllPermissionOfRole);
-        return view('Admin.roles.edit_roles', compact('permissions', 'role', 'roles_permissions'));
-    }
-    public function validation($request){
-        return $this->validate($request,[
-            'roles_name' => 'required|unique:roles,roles_name|max:100',
-        ],
-        [
-            'roles_name.required' => 'Bạn chưa nhập tên roles',
-            'roles_name.unique' => 'Tên roles đã tồn tại',
-        ]);
-    }
-    public function update_roles(Request $request, $id){
-            $roles=Roles::findOrfail($id);
-        if ($roles->roles_name==$request->roles_name) {
-            $data=$request->all();
-            try {
-            DB::beginTransaction();
-                $role =Roles::findOrfail($id);
-                $role->update($data);
-                DB::table('roles_permissions')->where('role_id', $id)->delete();
-                // $roleCreate = Roles::findOrfail($id);
-                $role->permission()->attach($request->permission);
-            DB::commit();
-                return redirect('/Admin/all-roles')->with('message','Update roles thành công');
-            } catch (\Exception $exception) {
-            DB::rollBack();
-            }
-        }else{
-            $this->validation($request);
-            $data=$request->all();
-            try {
-            DB::beginTransaction();
-                $role =Roles::findOrfail($id);
-                $role->update($data);
-                DB::table('roles_permissions')->where('role_id', $id)->delete();
-                // $roleCreate = Roles::findOrfail($id);
-                $role->permission()->attach($request->permission);
-            DB::commit();
-                return redirect('/Admin/all-roles')->with('message','Update roles thành công');
-            } catch (\Exception $exception) {
-            DB::rollBack();
-            }
-        }
 
+        return view('Admin.Role.edit',compact('permissions','role'));
     }
 
-    public function delete_roles($id)
+    /**
+     * Handle update role and permission
+     * @param $id
+     * @param     public function update($id, RoleUpdateRequest $request, UpdateRoleService $service)
+    $request
+     * @param UpdateRoleService $service
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update($id, RoleUpdateRequest $request, UpdateRoleService $service)
     {
-        try {
-            DB::beginTransaction();
-            $role =Roles::find($id);
-            if($role){
-                $role->permission()->detach();
-                $role->users()->detach();
-                $role->delete();
-            }
-            DB::commit();
-            return redirect('/Admin/all-roles')->with('message','Xóa roles thành công');
-        } catch (\Exception $exception) {
-            DB::rollBack();
-        }
+        $attributes = $request->only(['role_name','desc']);
+        $permissions = $request->only(['premissions']);
+        $service->handle($id, $attributes, $permissions);
 
+        return redirect()->route('admin.roles.index');
+        //        ->with('success', __('messages.request.update_success'));
     }
+
+    /**
+     * Handle softDelete role;
+     * @param $id
+     * @param DeleteRoleService $service
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete($id, DeleteRoleService $service)
+    {
+        $service->handle($id);
+
+        return redirect()->route('admin.roles.index');
+        //        ->with('success', __('messages.request.delete_success'));
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function onlyTrashed()
+    {
+        $softDeleteRoles = $this->repository->getSoftDeleteRoles();
+
+        return view('Admin.Role.list_softdeletes_roles');
+    }
+
+    /**
+     * Restore Role.
+     * @param $id
+     * @param RestoreRoleServiece $serviece
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore($id, RestoreRoleServiece $serviece)
+    {
+        $serviece->handle($id);
+
+        return redirect()->route('admin.roles.index');
+        //        ->with('success', __('messages.request.restore_success'));
+    }
+
+    /**
+     * @param $id
+     * @param ForceDeleteRoleService $service
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function forceDelete($id, ForceDeleteRoleService $service)
+    {
+        $service->handle($id);
+
+        return redirect()->route('admin.roles.index');
+        //        ->with('success', __('messages.request.forcedelete_success'));
+    }
+
 }
