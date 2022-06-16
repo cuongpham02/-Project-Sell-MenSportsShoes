@@ -28,6 +28,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('backend/js/jquery2.0.3.min.js')}}"></script>
 <script src="{{asset('backend/js/raphael-min.js')}}"></script>
 <script src="{{asset('backend/js/morris.js')}}"></script>
+<style>
+    #content{
+        min-height: 1000px;
+    }
+</style>
 </head>
 <body>
 <section id="container">
@@ -35,7 +40,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <header class="header fixed-top clearfix">
 <!--logo start-->
 <div class="brand">
-    <a href="{{URL::to('/Admin/dashboard')}}" class="logo">
+    <a href="#" class="logo">
         Dashboard
     </a>
     <div class="sidebar-toggle-box">
@@ -62,9 +67,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
-                <li><a href="#"><i class=" fa fa-suitcase"></i>Thong tin tài khoản</a></li>
+                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile User</a></li>
                 <!-- <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li> -->
-                <li><a href="{{route('auth.logout')}}"><i class="fa fa-key"></i>Dang xuat</a></li>
+                <li><a href="{{route('auth.logout')}}"><i class="fa fa-key"></i>Logout</a></li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -79,9 +84,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <!--main content start-->
 <section id="main-content">
-	<section class="wrapper">
+	<section class="wrapper" id="content">
 		<!-- //market-->
-		@yield('admin_conten')
+		@yield('admin_content')
 		<!-- //market-->
     </section>
  <!-- footer -->
@@ -89,7 +94,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="wthree-copyright">
 			  <p>© 2022 Hello <strong>
                       @if(auth()->guard('admins')->user())
-                          {{ auth()->guard('admins')->user() }}
+                          {{ auth()->guard('admins')->user()->name }}
                       @endif
                   </strong> </p>
 			</div>
