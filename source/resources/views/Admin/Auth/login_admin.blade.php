@@ -33,7 +33,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
          @endphp
         @if ($errors->any())
             <div class="alert alert-danger">
-                There were some errors with your request.
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -43,7 +42,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         @endif
         <form action="{{ route('auth.login') }}" method="post">
             @csrf
-            <input type="text" class="ggg" name="email" placeholder="Enter Emai" value="{{ request('email',old('admin_email')) }}" required>
+            <input type="text" class="ggg" name="email" placeholder="Enter Emai" value="{{ request('email',old('email')) }}" required>
             <input type="password" class="ggg" name="password" placeholder="Enter Password" required>
             <span><input type="checkbox" value="remember" />Remember Me ?</span>
             <h6><a href="#">Quên mật khẩu?</a></h6>
