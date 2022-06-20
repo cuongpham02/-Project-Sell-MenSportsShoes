@@ -25,29 +25,9 @@ Route::group(['prefix' => 'Admin'], function() {
 //
 //      //Admin/Controller-------------------------------------------------
 //      Route::namespace('Admin')->group(function() {
-//
-//         Route::get('/','DashboardController@index')->name('dashboard.index'); // => Admin
-//         Route::get('dashboard', 'DashboardController@index')->name('dashboard.dashboard');
-//         // =>Admin/dashboard
-//         Route::group(['middleware'=>'check_per:customer'],function(){
-//            Route::get('all-customer','UsersController@index_customer')->name('Admin.all-customer');
-//            Route::get('delete-customer/{id}','UsersController@delete_customer')->name('Admin.delete-customer');
-//         });
-//
-//
 //      // Route::group(['middleware'=>'Admin.roles'],function(){
 //
-//         // Route::post('assign-roles','UsersController@assign_roles')->name('Admin.assign');
-//         // Route::get('delete-user-roles/{id}','UsersController@delete_user_roles');
-//         // Route::get('add-users','UsersController@add_users');
-//         // Route::post('store-users','UsersController@store_users')->name('save-add-users');
-//         // Route::get('edit-user/{id}','UsersController@edit_users')->name('Admin.edit-users');
-//         // Route::post('update-user/{id}','UsersController@update_user')->name('Admin.update-users');
-//         // Route::get('all-users','UsersController@index_users');
-//         Route::group(['middleware'=>'check_per:roles'],function(){
-//            //Roles
-//
-//         });
+
 //         //users-role-permission
 //
 //            //comment
