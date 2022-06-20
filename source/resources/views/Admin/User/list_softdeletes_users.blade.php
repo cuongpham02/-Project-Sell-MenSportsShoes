@@ -1,4 +1,3 @@
-
 @extends('Adim.layouts_admin.admin_layout')
 @section('admin_content')
     <div class="table-agile-info">
