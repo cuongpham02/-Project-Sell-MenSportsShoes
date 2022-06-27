@@ -13,7 +13,7 @@ class CreateUsersRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_roles', function (Blueprint $table) {
+        Schema::create('user_role', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('role_id');
@@ -30,13 +30,6 @@ class CreateUsersRolesTable extends Migration
      */
     public function down()
     {
-        // Schema::table('users_roles',function (Blueprint $table)
-        // {
-        //     $table->dropForeign('users_roles_user_id_foreign');
-        //     $table->dropColumn('user_id');
-        //     $table->dropForeign('users_roles_role_id_foreign');
-        //     $table->dropColumn('role_id');
-        // });
-        Schema::dropIfExists('users_roles');
+        Schema::dropIfExists('user_role');
     }
 }

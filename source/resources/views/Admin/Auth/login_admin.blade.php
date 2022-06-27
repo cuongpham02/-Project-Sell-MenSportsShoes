@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-<title>Trang quản lý admin</title>
+<title>Login Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -23,7 +23,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 <div class="log-w3">
     <div class="w3layouts-main">
-        <h2 style="color: white;">Đăng nhập ngay</h2>
+        <h2 style="color: white;">Login</h2>
         @php
             $message=Session::get('message');
             if ($message) {
@@ -45,7 +45,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <input type="text" class="ggg" name="email" placeholder="Enter Emai" value="{{ request('email',old('email')) }}" required>
             <input type="password" class="ggg" name="password" placeholder="Enter Password" required>
             <span><input type="checkbox" value="remember" />Remember Me ?</span>
-            <h6><a href="#">Quên mật khẩu?</a></h6>
+            <h6><a href="#">Forgot Password?</a></h6>
                 <div class="clearfix"></div>
                 <input type="submit" value="Login" name="login">
         </form>

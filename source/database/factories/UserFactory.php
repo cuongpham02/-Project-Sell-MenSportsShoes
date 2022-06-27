@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Users;
-use App\Roles;
+use App\Models\User\User;
 
 use Faker\Generator as Faker;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /*
@@ -19,17 +19,14 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(Users::class, function (Faker $faker) {
+$factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'phone' => '0932023992',
-        'password' => '4297f44b13955235245b2497399d7a93',
-        'flag'=>1,
+        'address' => $faker->address,
+        'password' => Hash::make(123456789),
         'remember_token' => Str::random(10),
     ];
 });
-    $factory->afterCreating(Users::class, function($users,$faker){
-    $role = Roles::where('roles_name','Admin')->get();
-    $users->roles()->sync($role->pluck('id'));
-});
+

@@ -13,9 +13,9 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable, softDeletes;
-    public $timestamps = false;
+    public $timestamps = true;
     protected $fillable = [
-        'name',  'email', 'password','phone','flag'
+        'name', 'email', 'password', 'phone', 'flag', 'address'
     ];
     protected $primaryKey = 'id';
     protected $table = 'users';
