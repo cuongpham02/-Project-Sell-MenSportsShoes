@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Repositories\Permission;
+namespace App\Repositories\Admin\Permission;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\Permission\PermissionRepository;
 use App\Entities\Permission\Permission;
 use App\Validators\Permission\PermissionValidator;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
  * Class PermissionRepositoryEloquent.
@@ -44,5 +43,5 @@ class PermissionRepositoryEloquent extends BaseRepository implements PermissionR
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
 }

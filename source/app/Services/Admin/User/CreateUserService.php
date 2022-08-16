@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\User;
 
-use App\Repositories\User\UserRepository;
+use App\Repositories\Admin\User\UserRepository;
 
 class CreateUserService
 {

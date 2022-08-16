@@ -22,14 +22,14 @@
                 </li>
 
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="{{ route() }}">
                         <i class="fa fa-book"></i>
                         <span>Thương hiệu sản phẩm</span>
                     </a>
-                    <ul class="sub">
-                        <!-- <li><a href="{{route('admin.dashboard.index')}}" >Thêm Thương Hiệu</a></li>  -->
-                        <li><a href="{{route('admin.dashboard.index')}}">Liệt Kê Thương Hiệu </a></li>
-                    </ul>
+{{--                    <ul class="sub">--}}
+{{--                        <!-- <li><a href="{{route('admin.dashboard.index')}}" >Thêm Thương Hiệu</a></li>  -->--}}
+{{--                        <li><a href="{{route('admin.dashboard.index')}}">Liệt Kê Thương Hiệu </a></li>--}}
+{{--                    </ul>--}}
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;">

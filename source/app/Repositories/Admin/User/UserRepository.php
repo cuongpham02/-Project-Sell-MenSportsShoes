@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\User;
+namespace App\Repositories\Admin\User;
 
 use Prettus\Repository\Contracts\RepositoryInterface;
 
@@ -12,5 +12,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface UserRepository extends RepositoryInterface
 {
     public function getAllUsers($limit = null, $filter = null);
-    public function getSoftDeleteRoles();
+    public function getSoftDeleteUsers();
 }
