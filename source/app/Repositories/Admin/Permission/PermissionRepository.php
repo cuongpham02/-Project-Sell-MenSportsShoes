@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Permission;
+namespace App\Repositories\Admin\Permission;
 
 use Prettus\Repository\Contracts\RepositoryInterface;
 

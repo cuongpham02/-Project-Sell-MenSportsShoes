@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Repositories\Category;
+namespace App\Repositories\Admin\Permission;
 
-use Prettus\Repository\Eloquent\BaseRepository;
+use App\Entities\Permission\Permission;
+use App\Validators\Permission\PermissionValidator;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\Category\CategoryRepository;
-use App\Entities\Category\Category;
-use App\Validators\Category\CategoryValidator;
+use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
- * Class CategoryRepositoryEloquent.
+ * Class PermissionRepositoryEloquent.
  *
- * @package namespace App\Repositories\Category;
+ * @package namespace App\Repositories\Permission;
  */
-class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepository
+class PermissionRepositoryEloquent extends BaseRepository implements PermissionRepository
 {
     /**
      * Specify Model class name
@@ -22,7 +21,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
      */
     public function model()
     {
-        return Category::class;
+        return Permission::class;
     }
 
     /**
@@ -33,7 +32,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     public function validator()
     {
 
-        return CategoryValidator::class;
+        return PermissionValidator::class;
     }
 
 
@@ -44,5 +43,5 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
 }

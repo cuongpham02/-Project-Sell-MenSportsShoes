@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Repositories\User;
+namespace App\Repositories\Admin\User;
 
+
+use App\Models\User\User;
+use App\Repositories\Admin\Role\RoleRepository;
 use Illuminate\Database\Eloquent\Builder;
-use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\User\UserRepository;
-use App\Entities\User\User;
-use App\Validators\User\UserValidator;
+use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
  * Class UserRepositoryEloquent.
  *
  * @package namespace App\Repositories\User;
  */
+
 class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
     /**
@@ -39,6 +40,11 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     public function getAllUsers($limit = null, $filter = null)
     {
         // TODO: Implement getAllUsers() method.
+    }
+
+    public function getSoftDeleteUsers()
+    {
+        // TODO: Implement getSoftDeleteUsers() method.
     }
 
     private function _withFilter($filter)
